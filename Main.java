@@ -1,72 +1,60 @@
 
 import java.util.ArrayList;
-
 import java.util.Scanner;
 
-public class Main{
-    
+public class Main {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         int resp = 0;
-        ArrayList<Persona> personas = new ArrayList();
+        ArrayList<DispositivoMovil> dispositivos = new ArrayList();
+        
         do{
-            System.out.println("1. Crear Persona");
-            System.out.println("2. Ver Banner");
-            System.out.println("3. Modificar Banner");
-            System.out.println("4. Salir");
+            System.out.println("1. Crear Dispositivo Movil");
+            System.out.println("2. Listar Dispositivos");
+            System.out.println("3. Salir");
             resp = s.nextInt();
             s.nextLine();
             switch(resp){
                 case 1:{
-                    System.out.println("Ingrese Nombre");
-                    String nombre = s.nextLine();
-                    System.out.println("Ingrese tipo (1. Observador, 2. Manager)");
+                    System.out.println("1. Telefono");
+                    System.out.println("2. Tablet");
+                    System.out.println("3. Laptop");
                     int tipo = s.nextInt();
-                    if(tipo == 1){
-                        System.out.println("Observador");
-                        personas.add(new Observador(SingleBanner.getInstance(), nombre));
-                    }else{
-                        System.out.println("Manager");
-                        personas.add(new Manager(SingleBanner.getInstance(), nombre));
+                    s.nextLine();
+                    TipoMovil tm;
+                    switch(tipo){
+                        case 1:{
+                            tm = TipoMovil.TELEFONO;
+                            break;
+                        }
+                        case 2:{
+                            tm = TipoMovil.TABLET;
+                            break;
+                        }
+                        default:{
+                            tm = TipoMovil.LAPTOP;
+                            break;
+                        }
                     }
+                    dispositivos.add(FactoryMovil.getMovil(tm));
                     break;
                 }
                 case 2:{
-                    listar(personas);
-                    int p = s.nextInt();
-                    s.nextLine();
-                    System.out.println("Banner: " + personas.get(p).verBanner());
+                    for (int i = 0; i < dispositivos.size(); i++) {
+                        System.out.println(i + ". " + dispositivos.get(i).toString());
+                    }
+                    System.out.println("");
                     break;
                 }
                 case 3:{
-                    listar(personas);
-                    int p = s.nextInt();
-                    s.nextLine();
-                    System.out.println("Nuevo Banner: ");
-                    String mensaje = s.nextLine();
-                    if(personas.get(p).modificarBanner(mensaje)){
-                        System.out.println("Modificado!");
-                    }else{
-                        System.out.println("No modificado!");
-                    }
-                    break;
-                }
-                case 4:{
                     break;
                 }
                 default:{
                     System.out.println("Opción no válida");
-                    break;
                 }
             }
-        }while(resp != 4);
-    }
-    
-    static void listar(ArrayList<Persona> personas){
-        for (int i = 0; i < personas.size(); i++) {
-            System.out.println(i + ". " + personas.get(i).toString());
-        }
-        System.out.println("");
+            
+        }while(resp != 3);
+        
     }
 }
-
