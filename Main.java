@@ -6,35 +6,46 @@ public class Main {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         int resp = 0;
-        PS4Player PS4 = new PS4Player();
+        ArrayList<Casa> casas = new ArrayList();
         
         do{
-            System.out.println("1. Jugar juego de PS1");
-            System.out.println("2. Jugar juego de PS2");
-            System.out.println("3. Jugar juego de PS4");
-            System.out.println("4. Salir");
+            System.out.println("1. Build Casa");
+            System.out.println("2. Listar Casa");
+            System.out.println("3. Salir");
             resp = s.nextInt();
             s.nextLine();
             switch(resp){
                 case 1:{
-                    System.out.println("Ingrese titulo del juego:");
-                    String juego = s.nextLine();
-                    PS4.play("PS1", juego);
+                    System.out.println("1. Pequeña");
+                    System.out.println("2. Mediana");
+                    System.out.println("3. Grande");
+                    int res = s.nextInt();
+                    s.nextLine();
+                    switch(res){
+                        case 1:{
+                            casas.add(BuilderCasa.buildCasaPequena());
+                            break;
+                        }
+                        case 2:{
+                            casas.add(BuilderCasa.buildCasaMediana());
+                            break;
+                        }
+                        default:{
+                            casas.add(BuilderCasa.buildCasaGrande());
+                            break;
+                        }
+                    }
+                    System.out.println("Casa agregara: ");
+                    System.out.println(casas.get(casas.size() - 1).verCasa());
                     break;
                 }
                 case 2:{
-                    System.out.println("Ingrese titulo del juego:");
-                    String juego = s.nextLine();
-                    PS4.play("PS2", juego);
+                    for (int i = 0; i < casas.size(); i++) {
+                        System.out.println(i + ". " + casas.get(i).verCasa());
+                    }
                     break;
                 }
                 case 3:{
-                    System.out.println("Ingrese titulo del juego:");
-                    String juego = s.nextLine();
-                    PS4.play("PS4", juego);
-                    break;
-                }
-                case 4:{
                     break;
                 }
                 default:{
@@ -42,7 +53,7 @@ public class Main {
                 }
             }
             
-        }while(resp != 4);
+        }while(resp != 3);
         
     }
 }
